@@ -25,7 +25,7 @@ export class ProjectsService {
     }
   }
 
-  async findAll(status?: ProjectStatusEnum, limit: number= 10, page: number= 1): Promise<Project[] |string> {
+  async findAll(status?: ProjectStatusEnum, limit: number= 10, page: number= 1): Promise<Project[]> {
     try {
       const query = this.projectRepository.createQueryBuilder('projects');
       
@@ -68,7 +68,11 @@ export class ProjectsService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} project`;
+  async remove(id: number): Promise<void> {
+    const result = await this.projectRepository.delete(id);
+
+    if(result.affected === 0) {
+      throw new NotFoundException(`Not found project by ${id}`)
+    }
   }
 }
