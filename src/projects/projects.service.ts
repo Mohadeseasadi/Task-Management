@@ -1,10 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from './entities/project.entity';
 import { Repository } from 'typeorm';
 import ProjectStatusEnum from './enums/project-status.enum';
+import { error } from 'console';
 
 @Injectable()
 export class ProjectsService {
@@ -41,8 +42,12 @@ export class ProjectsService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} project`;
+  async findOne(id: number): Promise<Project | null> {
+    const project = await this.projectRepository.findOneBy({ id });
+
+    if (!project) throw new NotFoundException(`Not found project by ${id}`) ;
+
+    return project ;
   }
 
   update(id: number, updateProjectDto: UpdateProjectDto) {
