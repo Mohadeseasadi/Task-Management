@@ -15,9 +15,12 @@ export class ProjectsController {
 
   @Get()
   findAll( 
-    @Query('status') status?: ProjectStatusEnum 
+    @Query('status') status?: ProjectStatusEnum ,
+    @Query('limit') limit : number = 10 ,
+    @Query('page') page : number = 1 ,
+
   ) {
-    return this.projectsService.findAll(status);
+    return this.projectsService.findAll(status , limit , page);
   }
 
   @Get(':id')
