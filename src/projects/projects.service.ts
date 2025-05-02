@@ -5,7 +5,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from './entities/project.entity';
 import { Repository } from 'typeorm';
 import ProjectStatusEnum from './enums/project-status.enum';
-import { error } from 'console';
 
 @Injectable()
 export class ProjectsService {
