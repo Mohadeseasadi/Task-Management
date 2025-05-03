@@ -27,8 +27,9 @@ export class TasksController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tasksService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const task = await this.tasksService.findOne(+id);
+    return new ApiResponse(true , 'Task feched successfully' , task);
   }
 
   @Patch(':id')

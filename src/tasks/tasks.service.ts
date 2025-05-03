@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -44,8 +44,12 @@ export class TasksService {
       return await query.getMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} task`;
+  async findOne(id: number): Promise<Task | null> {
+    const task = await this.taskRepository.findOne({ where: {id}, relations: ['project'] });
+
+    if (!task) throw new NotFoundException(`Not found task by ${id}`);
+
+    return task ;
   }
 
   update(id: number, updateTaskDto: UpdateTaskDto) {
