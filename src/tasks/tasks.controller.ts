@@ -33,8 +33,9 @@ export class TasksController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-    return this.tasksService.update(+id, updateTaskDto);
+  async update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+    const updatedTask = await this.tasksService.update(+id ,updateTaskDto);
+    return new ApiResponse(true , 'Task updated successfully' , updatedTask);
   }
 
   @Delete(':id')
