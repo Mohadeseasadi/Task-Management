@@ -16,7 +16,6 @@ export class TasksService {
 
   async create(createTaskDto: CreateTaskDto): Promise<Task> {
     try {
-
       const { projectId , ...taskData } = createTaskDto ;
       
       const project = await this.projectRepository.findOneByOrFail({id: projectId})
@@ -33,8 +32,9 @@ export class TasksService {
     }
   }
 
-  findAll() {
-    return `This action returns all tasks`;
+  async findAll(): Promise<Task[]> {
+    const tasks = await this.taskRepository.find({relations: ['project']}) ;
+    return tasks ; 
   }
 
   findOne(id: number) {

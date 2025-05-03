@@ -11,13 +11,14 @@ export class TasksController {
 
   @Post()
   async create(@Body() createTaskDto: CreateTaskDto) {
-    const project = await this.tasksService.create(createTaskDto);
-    return new ApiResponse(true , 'Task created successfully' , project)
+    const task = await this.tasksService.create(createTaskDto);
+    return new ApiResponse(true , 'Task created successfully' , task)
   }
 
   @Get()
-  findAll() {
-    return this.tasksService.findAll();
+  async findAll() {
+    const tasks = await this.tasksService.findAll();
+    return new ApiResponse(true, 'Tasks fetched successfully' , tasks);
   }
 
   @Get(':id')
