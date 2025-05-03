@@ -1,7 +1,7 @@
 enum TaskStatusEnum {
     Set = "set" , 
     Doing = "doing" ,
-    Done = " done" , 
+    Done = "done" , 
     Cancel = "cancel"
 }
 
