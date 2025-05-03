@@ -42,6 +42,6 @@ export class ProjectsController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const project = await this.projectsService.remove(+id);
-    return new ApiResponse(true, 'Project removed successfully', project);
+    return new ApiResponse(true, 'Project removed successfully', null);
   }
 }

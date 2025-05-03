@@ -39,7 +39,8 @@ export class TasksController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tasksService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const task = await this.tasksService.remove(+id);
+    return new ApiResponse(true , 'Project removed successfully' , null)
   }
 }
