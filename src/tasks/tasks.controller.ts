@@ -19,10 +19,11 @@ export class TasksController {
   @Get()
   async findAll(
     @Query('status') status?: TaskStatusEnum ,
+    @Query('project') projectId?: number ,
     @Query('limit') limit: number=10 ,
     @Query('page') page: number=1, 
   ) {
-    const tasks = await this.tasksService.findAll(status,limit,page);
+    const tasks = await this.tasksService.findAll(status, projectId, limit, page);
     return new ApiResponse(true, 'Tasks fetched successfully' , tasks);
   }
 
